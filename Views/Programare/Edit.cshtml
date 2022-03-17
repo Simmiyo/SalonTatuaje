@@ -1,0 +1,169 @@
+﻿@model SalonTatuaje.Models.Programare
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Editează programarea</h2>
+
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Programare", method: FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    <div class="form-horizontal">
+        <h4>Programare</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProgramareCod)
+
+        <div id="data" class="form-group">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="ora" class="form-group">
+            @Html.LabelFor(model => model.Ora, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ora, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ora, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sala, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sala, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Sala, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <h5>Nume artist anterior: @Html.DisplayFor(model => model.Tartist.Nume)</h5>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tartist", "Artist nou:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ArtistId, new SelectList(ViewBag.artisti, "Value", "Text"), "Alege un artist", new { @class = "form-control", id = "artist" })
+                @Html.ValidationMessageFor(model => model.ArtistId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <h5>Proiecte anteriore: </h5>
+                @foreach (var pro in ViewBag.proiecteAlese)
+                {
+                    <p>@(pro)</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("ProiecteId", "Alege proiecte noi:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBox("ProiecteId", new SelectList(Enumerable.Empty<SelectListItem>(), "id", "name"),
+                               new { @class = "form-control", @id = "tatuaje" })
+                @*@Html.ValidationMessageFor("Proiecte", "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <h5>Cerinte anteriore: </h5>
+                @foreach (var cer in ViewBag.cerinteAlese)
+                {
+                    <p>@(cer)</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CerinteNoi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="ImageFilesCerinte" multiple="multiple" />
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <h5>Tipuri tatuaje anteriore: </h5>
+                @foreach (var tip in ViewBag.tipTatuajeAlese)
+                {
+                    <p>@(tip)</p>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("TipuriTatuaje", "Tipurile noi de tatuaje:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TipTatuajeId", (MultiSelectList)ViewBag.tipTatuaje, new { multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.TipuriTatuaje, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Înapoi la listă", "Index")
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () { //calendar 
+            $('input[type=datetime]').datepicker({
+                dateFormat: "dd/M/yy",
+                changeMonth: true,
+                changeYear: true,
+                minDate: -0,
+                maxDate: "+5Y"
+            });
+        });
+
+        $(document).ready(function () {
+            $("#artist").change(function () {
+                var artId = $("#artist option:selected").val();
+                $.getJSON("/Programare/GetAllImagesForArtist", { id: artId },
+                    function (data) {
+                        var select = $("#tatuaje");
+                        select.empty();
+                        @*select.append($('<option/>', {
+                            value: 0,
+                            text: "Alege tatuajele"
+                        }));*@
+                        $.each(data, function (index, itemData) {
+                            select.append($('<option/>', {
+                                value: itemData.Id,
+                                text: itemData.Nume
+                            }));
+                        });
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        console.log("error " + textStatus);
+                        console.log("incoming Text " + jqXHR.responseText);
+                    });
+            });
+        });
+    </script>
+
+}

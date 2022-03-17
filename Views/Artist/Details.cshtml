@@ -1,0 +1,58 @@
+﻿@model SalonTatuaje.Models.Artist
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="grid-container">
+
+    <div class="detalii">
+
+        <div class="nume-bio">
+            <h1>@Html.DisplayFor(model => model.Nume)</h1>
+            <p>@Html.DisplayFor(model => model.Bio)</p>
+        </div>
+        <div class="poza">
+            <img class="img-profile" src="@Url.Content(Model.PozaArtist.PathImagine)" alt="Poza artistului" />
+        </div>
+        <div class="contact">
+            <h5> Număr de telefon: @Html.DisplayFor(model => model.InfoContact.NrTel)</h5>
+            <h5> Adresă de email: @Html.DisplayFor(model => model.InfoContact.Email)</h5>
+            <h5> Instagram: @Html.DisplayFor(model => model.InfoContact.Instagram)</h5>
+        </div>
+
+    </div>
+
+    <div class="munca">
+        <input type="hidden" value="@ViewBag.idArtist" id="artist" />
+        <div id="gal" class="galerie-tatuaje">
+            @Html.Partial("_GalerieTatuaje", Model.IstoricTatuaje[0]);
+        </div>
+        <input type="hidden" value="@Model.IstoricTatuaje.Count" id="ist-tat-size" />
+
+
+        <div id="proj" class="portofoliu-proiecte">
+            @Html.Partial("_ProiectePortofoliu", Model.PortofoliuDesene[0]);
+        </div>
+        <input type="hidden" value="@Model.PortofoliuDesene.Count" id="ist-proj-size" />
+
+    </div>
+
+</div>
+
+@if (ViewContext.HttpContext.User.IsInRole("Admin"))
+{
+    <p>
+        @using (Html.BeginForm(actionName: "Edit", controllerName: "Artist", method: FormMethod.Get, routeValues: new { id = Model.ArtistCod }))
+        {
+            <button style="margin-right:5px" class="btn btn-primary col-lg-1" type="submit">Editează</button>
+        }
+
+        @using (Html.BeginForm(actionName: "Delete", controllerName: "Artist", method: FormMethod.Post, routeValues: new { id = Model.ArtistCod }))
+        {
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button style="margin-right:5px" class="btn btn-primary col-lg-1" type="submit">Șterge</button>
+        }
+        @Html.ActionLink("Înapoi la listă", "Index")
+    </p>
+}

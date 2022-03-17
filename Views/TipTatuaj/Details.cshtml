@@ -1,0 +1,53 @@
+﻿@model SalonTatuaje.Models.TipTatuaj
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;"> Detalii tip tatuaj</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Localizare)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localizare)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lungime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lungime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Culoare)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Culoare)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pret)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pret)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editează", "Edit", new { id = Model.TipTatuajCod }) |
+    @Html.ActionLink("Înapoi la listă", "Index")
+</p>

@@ -1,0 +1,91 @@
+﻿@model SalonTatuaje.Models.Programare
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Detalii Programare</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sala)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sala)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tartist)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Tartist.Nume, "Details", "Artist", new { id = Model.Tartist.ArtistCod }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tclient)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tclient.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipuriTatuaje)
+        </dt>
+
+        <dd>
+            @foreach (var tipTauaj in Model.TipuriTatuaje.Select((value, index) => new { value, index }))
+            {
+                @Html.ActionLink("Tip Tatuaj " + tipTauaj.index.ToString(), "Details",
+                    "TipTatuaj", new { id = tipTauaj.value.TipTatuajCod }, null)
+                <br />
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Proiecte)
+        </dt>
+
+        <dd>
+             @Html.ActionLink("Tatuaje", "Galerie",
+                    "Imagine", new { idxs = ViewBag.ids }, null)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PretTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PretTotal)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editează", "Edit", new { id = Model.ProgramareCod }) |
+    @Html.ActionLink("Înapoi la listă", "Index")
+</p>
+

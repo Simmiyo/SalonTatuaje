@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SalonTatuaje.Models.Imagine>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Lista imaginilor</h2>
+
+<p>
+    @using (Html.BeginForm(actionName: "New", controllerName: "Imagine", method: FormMethod.Get))
+    {
+        <button class="btn btn-warning" type="submit">Adăugați o nouă poză</button>
+    }
+</p>
+<table class="table">
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content(item.PathImagine)" width="70px" height="70px"/>
+        </td>
+
+        <td>
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Imagine", method: FormMethod.Get, routeValues: new { id = item.CodImagine }))
+            {
+                <button class="btn btn-success" type="submit">Editează</button>
+            }
+        </td>
+
+        <td>
+            @using (Html.BeginForm(actionName: "Details", controllerName: "Imagine", method: FormMethod.Get, routeValues: new { id = item.CodImagine }))
+            {
+                <button class="btn btn-info" type="submit">Detalii</button>
+            }
+        </td>
+
+        <td>
+            @using (Html.BeginForm(actionName: "Delete", controllerName: "Imagine", method: FormMethod.Post, routeValues: new { id = item.CodImagine }))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-danger" type="submit">Șterge</button>
+            }
+        </td>
+    </tr>
+}
+
+</table>

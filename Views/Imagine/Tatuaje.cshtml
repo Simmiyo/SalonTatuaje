@@ -1,0 +1,27 @@
+﻿@model IEnumerable<SalonTatuaje.Models.Imagine>
+
+@{
+    ViewBag.Title = "Tatuaje";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Tatuaje</h2>
+
+<table class="table">
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        <img src="@Url.Content(item.PathImagine)" width="70px" height="70px" />
+    </td>
+
+    <td>
+        @using (Html.BeginForm(actionName: "Details", controllerName: "Imagine", method: FormMethod.Get, routeValues: new { id = item.CodImagine }))
+        {
+            <button class="btn btn-info" type="submit">Detalii</button>
+        }
+    </td>
+
+</tr>
+}
+
+</table>

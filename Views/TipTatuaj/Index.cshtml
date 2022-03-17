@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SalonTatuaje.Models.TipTatuaj>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Tipuri tatuaje</h2>
+
+@if (ViewContext.HttpContext.User.IsInRole("Admin"))
+{
+    <p>
+        @using (Html.BeginForm(actionName: "New", controllerName: "TipTatuaj", method: FormMethod.Get))
+        {
+            <button class="btn btn-warning" type="submit"> Nou tip </button>
+        }
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeTip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Localizare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lungime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Culoare)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pret)
+        </th>
+        @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+        {
+            <th>
+                <p>Optiuni</p>
+            </th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeTip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localizare)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lungime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Culoare)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pret)
+            </td>
+            @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+            {
+                <td>
+                    <table style="padding: 0; margin: 0;">
+                        <tbody>
+                            <tr>
+                                <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                    @using (Html.BeginForm(actionName: "Edit", controllerName: "TipTatuaj", method: FormMethod.Get, routeValues: new { id = item.TipTatuajCod }))
+                                    {
+                                        <button class="btn btn-success" type="submit">Editează</button>
+                                    }
+                                </td>
+                                <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                    @using (Html.BeginForm(actionName: "Details", controllerName: "TipTatuaj", method: FormMethod.Get, routeValues: new { id = item.TipTatuajCod }))
+                                    {
+                                        <button class="btn btn-info" type="submit">Detalii</button>
+                                    }
+                                </td>
+                                <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                    @using (Html.BeginForm(actionName: "Delete", controllerName: "TipTatuaj", method: FormMethod.Post, routeValues: new { id = item.TipTatuajCod }))
+                                    {
+                                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                        <button class="btn btn-danger" type="submit">Șterge</button>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>

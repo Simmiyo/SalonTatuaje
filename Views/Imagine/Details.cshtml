@@ -1,0 +1,44 @@
+﻿@model SalonTatuaje.Models.Imagine
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Detalii despre imagine</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PathImagine)
+        </dt>
+
+        <dd>
+            @(ViewBag.titlu)
+        </dd>
+
+        <dt>
+            Imagine
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.PathImagine)" height="300px" />
+        </dd>
+
+@*        <dt>
+            Detalii artist
+        </dt>
+
+        <dd>
+            @using (Html.BeginForm(actionName: "Details", controllerName: "Artist", method: FormMethod.Get, routeValues: new { id = Model.ArtistId }))
+            {
+                <button class="btn btn-info" type="submit">Detalii artist</button>
+            }
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editează", "Edit", new { id = Model.CodImagine }) |
+    @Html.ActionLink("Înapoi la listă", "Index")
+</p>

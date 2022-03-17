@@ -1,0 +1,26 @@
+﻿@model IEnumerable<SalonTatuaje.Models.Imagine>
+
+@{
+    ViewBag.Title = "Galerie";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PathImagine)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content(item.PathImagine)" width="100px" height="100px" />
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.CodImagine })
+        </td>
+    </tr>
+}
+
+</table>

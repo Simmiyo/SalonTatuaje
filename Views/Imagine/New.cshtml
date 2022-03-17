@@ -1,0 +1,35 @@
+﻿@model SalonTatuaje.Models.Imagine
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;"> Adaugă o nouă imagine </h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Imagine", method: FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Imagine</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <h2>Încarcă o imagine:</h2>
+        <div class="col-md-10">
+            <input type="file" name="ImageFile" required/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Creează" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Înapoi la listă", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

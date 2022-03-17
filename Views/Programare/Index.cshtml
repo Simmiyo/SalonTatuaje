@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SalonTatuaje.Models.Programare>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Lista programărilor</h2>
+
+@if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Client"))
+{
+    <p>
+        @using (Html.BeginForm(actionName: "New", controllerName: "Programare", method: FormMethod.Get))
+        {
+            <button class="btn btn-warning" type="submit"> Programează-te </button>
+        }
+    </p>
+}
+    
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sala)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tartist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tclient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PretTotal)
+        </th>
+        <th>
+            <p>Optiuni</p>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sala)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tartist.Nume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tclient.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PretTotal)
+            </td>
+            <td>
+                <table style="padding: 0; margin: 0;">
+                    <tbody>
+                        <tr>
+                            @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Client"))
+                            {
+                                <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                    @using (Html.BeginForm(actionName: "Edit", controllerName: "Programare", method: FormMethod.Get, routeValues: new { id = item.ProgramareCod }))
+                                    {
+                                        <button class="btn btn-success" type="submit">Editează</button>
+                                    }
+                                </td>
+                            }
+                            <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                @using (Html.BeginForm(actionName: "Details", controllerName: "Programare", method: FormMethod.Get, routeValues: new { id = item.ProgramareCod }))
+                                {
+                                    <button class="btn btn-info" type="submit">Detalii</button>
+                                }
+                            </td>
+                            @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Client"))
+                            {
+                                <td style="border-top-width: 0px; padding: 0; margin: 0;">
+                                    @using (Html.BeginForm(actionName: "Delete", controllerName: "Programare", method: FormMethod.Post, routeValues: new { id = item.ProgramareCod }))
+                                    {
+                                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                        <button class="btn btn-danger" type="submit">Șterge</button>
+                                    }
+                                </td>
+                            }
+                     
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    }
+
+</table>

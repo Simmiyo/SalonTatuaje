@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SalonTatuaje.Models.Artist>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="text-align: center; margin: 20px; padding: 50px;">Artiștii noștri</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Artist
+        </th>
+        <th>
+            Număr de telefon
+        </th>
+        <th>
+            Adresă de email
+        </th>
+        <th>
+            Instagram
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoContact.NrTel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoContact.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoContact.Instagram)
+            </td>
+            <td>
+                @Html.ActionLink("Detalii", "Details", new { id = item.ArtistCod }) 
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+    @using (Html.BeginForm(actionName: "New", controllerName: "Artist", method: FormMethod.Get))
+    {
+        <button class="btn btn-warning" type="submit">Adăugați un nou artist</button>
+    }
+</p>

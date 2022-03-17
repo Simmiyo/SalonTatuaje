@@ -1,0 +1,96 @@
+﻿body {
+    width: 100%;
+    height: 100%;
+}
+
+.img-profile {
+    width: 400px;
+    padding: 0.35rem;
+    background-color: #272b30;
+    border: 4px solid #055564;
+    border-radius: 50%;
+}
+
+.img-tatuaje {
+    //display: block;
+    //margin: auto;
+    //position: absolute;
+    height: 60%;
+    padding: 0.35rem;
+    background-color: #272b30;
+    border: 2px outset #8f8f8f;
+}
+
+.grid-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows: 0.7fr 1.1fr;
+    gap: 35px 0px;
+    grid-template-areas: "detalii" "munca";
+}
+
+.detalii {
+    grid-area: detalii;
+    width: 100%;
+    height: 50%;
+    display: grid;
+    grid-template-columns: 250px repeat(2,min-content);
+    grid-template-rows: 1fr;
+    gap: 164px 164px;
+    grid-template-areas: "nume-bio poza contact";
+}
+
+.nume-bio {
+    grid-area: nume-bio;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    padding-top: 50px;
+}
+
+.poza {
+    grid-area: poza;
+    padding-top: 10px;
+}
+
+.contact {
+    grid-area: contact;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.munca {
+    grid-area: munca;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: 1fr;
+    gap: 0px 28px;
+    grid-template-areas: "galerie-tatuaje portofoliu-proiecte";
+}
+
+.galerie-tatuaje {
+    grid-area: galerie-tatuaje;
+}
+
+.galerie-tatuaje div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 700px;
+    border: 4px dotted #18dcbc;
+}
+
+.portofoliu-proiecte {
+    grid-area: portofoliu-proiecte;
+}
+
+.portofoliu-proiecte div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 700px;
+    border: 4px dotted #18dcbc;
+}
